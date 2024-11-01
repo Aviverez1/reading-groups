@@ -1,0 +1,84 @@
+/* src/app/modules/groups/components/group-list/group-list.component.css */
+.groups-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .groups-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .create-button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .group-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background: white;
+  }
+  
+  .group-info h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  .group-info p {
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .group-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  .group-actions {
+    margin-top: 15px;
+    text-align: right;
+  }
+  
+  .group-actions button {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  .error {
+    color: #dc3545;
+    background: #fee;
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 768px) {
+    .groups-grid {
+      grid-template-columns: 1fr;
+    }
+  }

@@ -1,0 +1,43 @@
+<!-- navbar.component.html -->
+<nav class="navbar">
+    <div class="nav-container">
+      <!-- Logo/Brand -->
+      <a routerLink="/" class="brand">
+        📚 Reading Groups
+      </a>
+  
+      <!-- Mobile Menu Button -->
+      <button class="menu-button" (click)="toggleMenu()">
+        <span class="menu-icon"></span>
+      </button>
+  
+      <!-- Navigation Links -->
+      <div class="nav-links" [class.active]="isMenuOpen">
+        <a routerLink="/" 
+           [class.active]="isActive('/')" 
+           (click)="isMenuOpen = false">
+          Home
+        </a>
+        <a routerLink="/groups" 
+           [class.active]="isActive('/groups')"
+           (click)="isMenuOpen = false">
+          Groups
+        </a>
+        <a routerLink="/books" 
+           [class.active]="isActive('/books')"
+           (click)="isMenuOpen = false">
+          Books
+        </a>
+      </div>
+  
+      <!-- Auth Buttons -->
+      <div class="auth-buttons" [class.active]="isMenuOpen">
+        <button class="btn-login" routerLink="/auth/login">
+          Login
+        </button>
+        <button class="btn-signup" routerLink="/auth/signup">
+          Sign Up
+        </button>
+      </div>
+    </div>
+</nav>

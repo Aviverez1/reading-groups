@@ -1,0 +1,57 @@
+<div class="auth-container">
+    <div class="auth-card">
+      <h2>Login</h2>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="error">
+          {{ error }}
+        </div>
+  
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            [class.invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          >
+          <div class="validation-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
+          </div>
+        </div>
+  
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          >
+          <div class="validation-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          [disabled]="loginForm.invalid || loading"
+          class="submit-button"
+        >
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+  
+        <!-- Sign Up Link -->
+        <div class="auth-links">
+          <p>Don't have an account? <a routerLink="/auth/signup">Sign up</a></p>
+          <a routerLink="/auth/forgot-password">Forgot password?</a>
+        </div>
+      </form>
+    </div>
+</div>

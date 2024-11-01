@@ -1,0 +1,83 @@
+<!-- home.component.html -->
+<div class="home-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Welcome to Reading Groups</h1>
+        <p>Join a community of readers, discover new books, and engage in meaningful discussions</p>
+        <div class="hero-buttons">
+          <button class="btn primary" routerLink="/groups/create">Create a Group</button>
+          <button class="btn secondary" routerLink="/groups">Browse Groups</button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Featured Groups Section -->
+    <section class="featured-groups">
+      <h2>Featured Reading Groups</h2>
+      
+      <div class="loading-spinner" *ngIf="isLoading">
+        Loading groups...
+      </div>
+  
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+  
+      <div class="groups-grid" *ngIf="!isLoading && !error">
+        <div class="group-card" *ngFor="let group of featuredGroups">
+          <div class="group-card-content">
+            <div class="group-book-cover" *ngIf="group.currentBook?.imageUrl">
+              <img [src]="group.currentBook?.imageUrl" [alt]="group.currentBook?.title">
+            </div>
+            <div class="group-info">
+              <h3>{{ group.name }}</h3>
+              <p class="group-description">{{ group.description }}</p>
+              <div class="group-meta">
+                <span>{{ group.memberCount }} members</span>
+                <span *ngIf="group.nextMeeting">
+                  Next meeting: {{ group.nextMeeting | date:'shortDate' }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="group-card-actions">
+            <button class="btn secondary" [routerLink]="['/groups', group.id]">
+              View Group
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="view-all-link" *ngIf="featuredGroups.length > 0">
+        <a routerLink="/groups">View All Groups →</a>
+      </div>
+    </section>
+  
+    <!-- Quick Start Guide -->
+    <section class="quick-start">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Join or Create</h3>
+          <p>Join an existing reading group or create your own</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Pick Books</h3>
+          <p>Vote on books or select from recommendations</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Read Together</h3>
+          <p>Follow the reading schedule and track progress</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Discuss</h3>
+          <p>Share thoughts and discuss with group members</p>
+        </div>
+      </div>
+    </section>
+  </div>

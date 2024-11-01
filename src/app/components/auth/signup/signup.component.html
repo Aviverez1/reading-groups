@@ -1,0 +1,70 @@
+<div class="auth-container">
+    <div class="auth-card">
+      <h2>Sign Up</h2>
+      
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="error">
+          {{ error }}
+        </div>
+  
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            [class.invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+          >
+          <div class="validation-message" *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+            <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="signupForm.get('email')?.errors?.['email']">Invalid email format</span>
+          </div>
+        </div>
+  
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            [class.invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+          >
+          <div class="validation-message" *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+            <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+  
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            [class.invalid]="signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+          >
+          <div class="validation-message" *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched">
+            Passwords do not match
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          [disabled]="signupForm.invalid || loading"
+          class="submit-button"
+        >
+          {{ loading ? 'Creating Account...' : 'Sign Up' }}
+        </button>
+  
+        <!-- Login Link -->
+        <div class="auth-links">
+          <p>Already have an account? <a routerLink="/auth/login">Login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,115 @@
+<!-- src/app/modules/groups/components/group-create/group-create.component.html -->
+<div class="create-group-container">
+    <div class="form-card">
+      <h2>Create Reading Group</h2>
+  
+      <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="error">
+          {{ error }}
+        </div>
+  
+        <!-- Group Image -->
+        <div class="form-group image-upload">
+          <label for="groupImage">Group Cover Image</label>
+          <div class="image-preview" [class.has-image]="imagePreview">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Group cover preview">
+            <div class="upload-placeholder" *ngIf="!imagePreview">
+              <span>Click to upload image</span>
+            </div>
+            <input
+              type="file"
+              id="groupImage"
+              accept="image/*"
+            >
+          </div>
+        </div>
+  
+        <!-- Group Name -->
+        <div class="form-group">
+          <label for="name">Group Name *</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            [class.invalid]="groupForm.get('name')?.invalid && groupForm.get('name')?.touched"
+          >
+          <div class="validation-message" *ngIf="groupForm.get('name')?.invalid && groupForm.get('name')?.touched">
+            <span *ngIf="groupForm.get('name')?.errors?.['required']">Group name is required</span>
+            <span *ngIf="groupForm.get('name')?.errors?.['minlength']">Name must be at least 4 characters</span>
+          </div>
+        </div>
+  
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="4"
+            [class.invalid]="groupForm.get('description')?.invalid && groupForm.get('description')?.touched"
+          ></textarea>
+          <div class="validation-message" *ngIf="groupForm.get('description')?.invalid && groupForm.get('description')?.touched">
+            <span *ngIf="groupForm.get('description')?.errors?.['required']">Description is required</span>
+            <span *ngIf="groupForm.get('description')?.errors?.['minlength']">Description must be at least 20 characters</span>
+          </div>
+        </div>
+  
+        <!-- Meeting Schedule -->
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="meetingDay">Meeting Day</label>
+            <select id="meetingDay" formControlName="meetingDay">
+              <option value="">Select a day</option>
+              <option *ngFor="let day of weekDays" [value]="day">
+                {{ day }}
+              </option>
+            </select>
+          </div>
+  
+          <div class="form-group half">
+            <label for="meetingTime">Meeting Time</label>
+            <input
+              id="meetingTime"
+              type="time"
+              formControlName="meetingTime"
+            >
+          </div>
+        </div>
+  
+        <!-- Max Members -->
+        <div class="form-group">
+          <label for="maxMembers">Maximum Members</label>
+          <input
+            id="maxMembers"
+            type="number"
+            formControlName="maxMembers"
+            min="2"
+          >
+          <div class="validation-message" *ngIf="groupForm.get('maxMembers')?.errors?.['min']">
+            Group must allow at least 2 members
+          </div>
+        </div>
+  
+        <!-- Tags -->
+        <div class="form-group">
+          <label for="tags">Tags (comma-separated)</label>
+          <input
+            id="tags"
+            type="text"
+            formControlName="tags"
+            placeholder="fiction, classics, mystery"
+          >
+        </div>
+  
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          class="submit-button"
+          [disabled]="groupForm.invalid || loading"
+        >
+          {{ loading ? 'Creating Group...' : 'Create Group' }}
+        </button>
+      </form>
+    </div>
+  </div>

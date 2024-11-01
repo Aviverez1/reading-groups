@@ -1,0 +1,219 @@
+/* home.component.css */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 60px 20px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .hero-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Featured Groups Section */
+  .featured-groups {
+    margin-bottom: 40px;
+  }
+  
+  .featured-groups h2 {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+  }
+  
+  .group-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: white;
+  }
+  
+  .group-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .group-card-content {
+    padding: 20px;
+  }
+  
+  .group-book-cover {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  
+  .group-book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .group-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+  }
+  
+  .group-description {
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .group-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    font-size: 0.9em;
+  }
+  
+  .group-card-actions {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+  }
+  
+  /* Quick Start Section */
+  .quick-start {
+    margin-bottom: 40px;
+  }
+  
+  .quick-start h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  
+  .step-card {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .step-number {
+    width: 30px;
+    height: 30px;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+  }
+  
+  /* Buttons and Links */
+  .btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn.primary {
+    background: #007bff;
+    color: white;
+  }
+  
+  .btn.primary:hover {
+    background: #0056b3;
+  }
+  
+  .btn.secondary {
+    background: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+  }
+  
+  .btn.secondary:hover {
+    background: #f8f9fa;
+  }
+  
+  .view-all-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .view-all-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  /* Loading and Error States */
+  .loading-spinner {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+  
+  .error-message {
+    text-align: center;
+    padding: 20px;
+    color: #dc3545;
+    background: #fee;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 40px 20px;
+    }
+  
+    .hero-content h1 {
+      font-size: 2em;
+    }
+  
+    .hero-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .groups-grid {
+      grid-template-columns: 1fr;
+    }
+  }
