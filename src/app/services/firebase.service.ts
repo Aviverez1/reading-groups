@@ -60,24 +60,55 @@ export class FirebaseService {
       throw error;
     }
   }
-  async getDocumentById(collectionName: string, documentId: string) {
-    try {
-      const docRef = doc(this.firestore, collectionName, documentId);
-      const docSnap = await getDoc(docRef);
+  // async getDocumentById(collectionName: string, documentId: string) {
+  //   try {
+  //     const docRef = doc(this.firestore, collectionName, documentId);
+  //     const docSnap = await getDoc(docRef);
       
-      if (docSnap.exists()) {
-        return {
-          id: docSnap.id,
-          ...docSnap.data()
-        };
-      } else {
-        throw new Error('Document not found');
-      }
-    } catch (error) {
-      console.error('Error getting document:', error);
-      throw error;
+  //     if (docSnap.exists()) {
+  //       return {
+  //         id: docSnap.id,
+  //         ...docSnap.data()
+  //       };
+  //     } else {
+  //       throw new Error('Document not found');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error getting document:', error);
+  //     throw error;
+  //   }
+  // }
+  // src/app/services/firebase.service.ts
+async getDocumentById(collectionName: string, documentId: string): Promise<ReadingGroup> {
+  try {
+    const docRef = doc(this.firestore, collectionName, documentId);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      return {
+        id: docSnap.id,
+        name: data['name'],
+        description: data['description'],
+        adminId: data['adminId'],
+        memberIds: data['memberIds'] || [],
+        memberCount: data['memberIds']?.length || 0,  // Calculate from memberIds array
+        createdAt: data['createdAt']?.toDate() || new Date(),
+        currentBook: data['currentBook'],
+        meetingDay: data['meetingDay'],
+        meetingTime: data['meetingTime'],
+        maxMembers: data['maxMembers'],
+        tags: data['tags'] || [],
+        coverImage: data['coverImage']
+      } as ReadingGroup;
+    } else {
+      throw new Error('Document not found');
     }
+  } catch (error) {
+    console.error('Error getting document:', error);
+    throw error;
   }
+}
   
   async updateDocument(collectionName: string, documentId: string, data: any) {
     try {
