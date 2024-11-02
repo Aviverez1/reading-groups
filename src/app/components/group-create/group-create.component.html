@@ -100,10 +100,11 @@
       </button>
     </form>
   </ng-container>
+</div>
 
   <app-book-search
     *ngIf="showBookSearch"
     (bookSelected)="onBookSelected($event)"
     (cancelled)="onBookSearchCancelled()"
+    [groupCreate]="true"
   ></app-book-search>
-</div>
