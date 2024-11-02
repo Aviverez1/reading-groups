@@ -1,9 +1,10 @@
-// src/app/modules/groups/components/group-create/group-create.component.ts
+// src/app/components/group-create/group-create.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../../services/firebase.service';
 import { getAuth } from 'firebase/auth';
+import { Book } from '../../models/book.interface';
 
 @Component({
   selector: 'app-group-create',
@@ -14,8 +15,8 @@ export class GroupCreateComponent {
   groupForm: FormGroup;
   error: string = '';
   loading: boolean = false;
-  selectedImage: File | null = null;
-  imagePreview: string | null = null;
+  showBookSearch = false;
+  selectedBook: Book | null = null;
 
   weekDays = [
     'Monday', 'Tuesday', 'Wednesday', 'Thursday',
@@ -37,6 +38,19 @@ export class GroupCreateComponent {
     });
   }
 
+  openBookSearch() {
+    this.showBookSearch = true;
+  }
+
+  onBookSelected(book: Book) {
+    this.selectedBook = book;
+    this.showBookSearch = false;
+  }
+
+  onBookSearchCancelled() {
+    this.showBookSearch = false;
+  }
+
   async onSubmit() {
     if (this.groupForm.invalid) return;
 
@@ -55,7 +69,14 @@ export class GroupCreateComponent {
         ...this.groupForm.value,
         adminId: user.uid,
         memberIds: [user.uid],
+        memberCount: 1,
         createdAt: new Date(),
+        currentBook: this.selectedBook ? {
+          id: this.selectedBook.id,
+          title: this.selectedBook.title,
+          imageUrl: this.selectedBook.imageLinks?.thumbnail || null
+        } : null,
+        coverImage: this.selectedBook?.imageLinks?.thumbnail || null,
         tags: this.groupForm.value.tags
           ? this.groupForm.value.tags.split(',').map((tag: string) => tag.trim())
           : []

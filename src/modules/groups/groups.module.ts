@@ -7,7 +7,7 @@ import { GroupsRoutingModule } from './groups-routing.module';
 import { GroupCreateComponent } from '../../app/components/group-create/group-create.component';
 import { GroupListComponent } from '../../app/components/group-list/group-list.component';
 import { GroupDetailsComponent } from '../../app/components/group-details/group-details.component';
-import {  } from '@angular/animations';
+import { SharedModule } from '../../app/components/shared/navbar/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,8 @@ import {  } from '@angular/animations';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    GroupsRoutingModule
+    GroupsRoutingModule,
+    SharedModule
   ]
 })
 export class GroupsModule { }

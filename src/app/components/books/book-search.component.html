@@ -1,45 +1,50 @@
+<!-- book-search.component.html -->
 <div class="book-search-container">
-    <div class="search-header">
-      <h2>Search Books</h2>
-      <div class="search-box">
-        <input 
-          [formControl]="searchControl"
-          type="text" 
-          placeholder="Search for books..."
-          class="search-input"
-        >
-        <div class="loading-spinner" *ngIf="isLoading">
-          Loading...
-        </div>
+  <div class="search-header">
+    <h2>Search Books</h2>
+    <button class="cancel-button" (click)="cancel()">Back to Group Creation</button>
+    <div class="search-box">
+      <input 
+        [formControl]="searchControl"
+        type="text" 
+        placeholder="Search for books..."
+        class="search-input"
+      >
+      <div class="loading-spinner" *ngIf="isLoading">
+        Loading...
       </div>
-    </div>
-  
-    <!-- Error Message -->
-    <div *ngIf="error" class="error-message">
-      {{ error }}
-    </div>
-  
-    <!-- Books Grid -->
-    <div class="books-grid" *ngIf="books.length > 0">
-      <div *ngFor="let book of books" class="book-card">
-        <div class="book-cover">
-          <img 
-            [src]="book.imageLinks?.thumbnail || 'assets/no-cover.png'" 
-            [alt]="book.title"
-          >
-        </div>
-        <div class="book-info">
-          <h3 class="book-title">{{ book.title }}</h3>
-          <p class="book-authors">{{ book.authors.join(', ') }}</p>
-          <p class="book-publish-date" *ngIf="book.publishedDate">
-            Published: {{ book.publishedDate | date:'yyyy' }}
-          </p>
-        </div>
-      </div>
-    </div>
-  
-    <!-- No Results Message -->
-    <div *ngIf="!isLoading && searchControl.value && books.length === 0" class="no-results">
-      No books found matching your search.
     </div>
   </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Books Grid -->
+  <div class="books-grid" *ngIf="books.length > 0">
+    <div *ngFor="let book of books" 
+         class="book-card" 
+         (click)="selectBook(book)"
+         [class.clickable]="true">
+      <div class="book-cover">
+        <img 
+          [src]="book.imageLinks?.thumbnail || 'assets/no-cover.png'" 
+          [alt]="book.title"
+        >
+      </div>
+      <div class="book-info">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-authors">{{ book.authors.join(', ') }}</p>
+        <p class="book-publish-date" *ngIf="book.publishedDate">
+          Published: {{ book.publishedDate | date:'yyyy' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results Message -->
+  <div *ngIf="!isLoading && searchControl.value && books.length === 0" class="no-results">
+    No books found matching your search.
+  </div>
+</div>

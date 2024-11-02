@@ -1,5 +1,5 @@
 // book-search.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../models/book.interface';
@@ -11,6 +11,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./book-search.component.css']
 })
 export class BookSearchComponent implements OnInit {
+  @Output() bookSelected = new EventEmitter<Book>();
+  @Output() cancelled = new EventEmitter<void>();
+  
   searchControl = new FormControl('');
   books: Book[] = [];
   error: string = '';
@@ -43,5 +46,13 @@ export class BookSearchComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  selectBook(book: Book) {
+    this.bookSelected.emit(book);
+  }
+
+  cancel() {
+    this.cancelled.emit();
   }
 }
