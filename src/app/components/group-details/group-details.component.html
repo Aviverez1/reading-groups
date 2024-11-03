@@ -9,7 +9,7 @@
       {{ error }}
     </div>
   
-    <ng-container *ngIf="currentUser$ | async as currentUser">
+    <ng-container *ngIf="currentUser$ | async as currentUser; else loginPrompt">
       <div *ngIf="group && !isLoading" class="group-content">
         <div class="group-header">
           <div class="group-title-section">
@@ -104,4 +104,10 @@
         </div>
       </div>
     </ng-container>
+  
+    <ng-template #loginPrompt>
+      <div class="login-prompt">
+        <p>In order to see the group, you must <a routerLink="/auth/login">log in</a>.</p>
+      </div>
+    </ng-template>
   </div>
