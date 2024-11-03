@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
       const groups = await this.firebaseService.getDocuments('groups');
       this.featuredGroups = groups
         .sort((a, b) => b.memberCount - a.memberCount) // Sort by member count
-        .slice(0, 4); // Get top 4 groups
+        .slice(0, 6); // Get top 4 groups
       this.isLoading = false;
     } catch (error) {
       this.error = 'Error loading reading groups';
