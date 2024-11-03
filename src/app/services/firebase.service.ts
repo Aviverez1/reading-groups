@@ -9,7 +9,8 @@ import {
   serverTimestamp,
   updateDoc,
   doc,
-  getDoc
+  getDoc,
+  deleteDoc
 } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from '../../environments/environment';
@@ -35,18 +36,6 @@ export class FirebaseService {
     }
   }
 
-  // async addDocument(collectionName: string, data: Omit<ReadingGroup, 'id'>) {
-  //   try {
-  //     const docRef = await addDoc(collection(this.firestore, collectionName), data);
-  //     return docRef.id;
-  //   } catch (error) {
-  //     console.error('Error adding document:', error);
-  //     throw error;
-  //   }
-  // }
-  // src/app/services/firebase.service.ts
-
-  
   async addDocument(collectionName: string, data: any) {
     try {
       const collectionRef = collection(this.firestore, collectionName);
@@ -61,26 +50,6 @@ export class FirebaseService {
     }
   }
 
-  // async getDocumentById(collectionName: string, documentId: string) {
-  //   try {
-  //     const docRef = doc(this.firestore, collectionName, documentId);
-  //     const docSnap = await getDoc(docRef);
-      
-  //     if (docSnap.exists()) {
-  //       return {
-  //         id: docSnap.id,
-  //         ...docSnap.data()
-  //       };
-  //     } else {
-  //       throw new Error('Document not found');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error getting document:', error);
-  //     throw error;
-  //   }
-  // }
-  // src/app/services/firebase.service.ts
-
   async getDocumentById(collectionName: string, documentId: string): Promise<ReadingGroup> {
     try {
       const docRef = doc(this.firestore, collectionName, documentId);
@@ -94,14 +63,17 @@ export class FirebaseService {
           description: data['description'],
           adminId: data['adminId'],
           memberIds: data['memberIds'] || [],
-          memberCount: data['memberIds']?.length || 0,  // Calculate from memberIds array
+          memberEmails: data['memberEmails'] || [], // Add this line
+          memberCount: data['memberIds']?.length || 0,
           createdAt: data['createdAt']?.toDate() || new Date(),
           currentBook: data['currentBook'],
           meetingDay: data['meetingDay'],
           meetingTime: data['meetingTime'],
           maxMembers: data['maxMembers'],
           tags: data['tags'] || [],
-          coverImage: data['coverImage']
+          coverImage: data['coverImage'],
+          lastUpdated: data['lastUpdated']?.toDate(),
+          nextMeeting: data['nextMeeting']?.toDate()
         } as ReadingGroup;
       } else {
         throw new Error('Document not found');
@@ -118,6 +90,16 @@ export class FirebaseService {
       await updateDoc(docRef, data);
     } catch (error) {
       console.error('Error updating document:', error);
+      throw error;
+    }
+  }
+
+  async deleteDocument(collectionName: string, documentId: string) {
+    try {
+      const docRef = doc(this.firestore, collectionName, documentId);
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.error('Error deleting document:', error);
       throw error;
     }
   }

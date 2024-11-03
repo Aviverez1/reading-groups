@@ -1,103 +1,107 @@
-<!-- src/app/modules/groups/components/group-details/group-details.component.html -->
+<!-- group-details.component.html -->
 <div class="group-details-container">
-    <!-- Loading State -->
     <div *ngIf="isLoading" class="loading-state">
       <div class="loader"></div>
       <p>Loading group details...</p>
     </div>
   
-    <!-- Error State -->
     <div *ngIf="error" class="error-message">
       {{ error }}
     </div>
   
-    <!-- Group Content -->
-    <ng-container *ngIf="!isLoading && !error && group">
-      <div class="group-header">
-        <!-- Cover Image -->
-        <div class="cover-image" *ngIf="group.coverImage">
-          <img [src]="group.coverImage" [alt]="group.name">
-        </div>
+    <ng-container *ngIf="currentUser$ | async as currentUser">
+      <div *ngIf="group && !isLoading" class="group-content">
+        <div class="group-header">
+          <div class="group-title-section">
+            <h1>{{ group.name }}</h1>
+            
+            <div class="action-buttons">
+              <!-- Admin Actions -->
+              <ng-container *ngIf="isGroupAdmin(currentUser)">
+                <button class="edit-button" (click)="toggleEdit()">
+                  {{ isEditing ? 'Cancel Edit' : 'Edit Group' }}
+                </button>
+                <button class="delete-button" (click)="deleteGroup()">
+                  Delete Group
+                </button>
+              </ng-container>
   
-        <div class="group-title-section">
-          <h1>{{ group.name }}</h1>
+              <!-- Join Button -->
+              <button 
+                *ngIf="!isGroupMember(currentUser)"
+                (click)="joinGroup(currentUser)"
+                [disabled]="isJoining"
+                class="join-button"
+              >
+                {{ isJoining ? 'Joining...' : 'Join Group' }}
+              </button>
   
-          <!-- Join Button / Member Status -->
-          <ng-container *ngIf="currentUser$ | async as user">
-            <button 
-              *ngIf="!isGroupMember(user)"
-              (click)="joinGroup(user)"
-              [disabled]="isJoining"
-              class="join-button"
-              [class.loading]="isJoining"
-            >
-              {{ isJoining ? 'Joining...' : 'Join Group' }}
-            </button>
-            <div *ngIf="isGroupMember(user)" class="member-status">
-              <span class="status-badge" [class.admin]="isGroupAdmin(user)">
-                {{ isGroupAdmin(user) ? 'Admin' : 'Member' }}
-              </span>
-            </div>
-          </ng-container>
-        </div>
-      </div>
-  
-      <div class="group-content">
-        <!-- About Section -->
-        <section class="content-section">
-          <h2>About</h2>
-          <p>{{ group.description }}</p>
-        </section>
-  
-        <!-- Current Book -->
-        <section class="content-section" *ngIf="group.currentBook">
-          <h2>Currently Reading</h2>
-          <div class="current-book">
-            <img 
-              [src]="group.currentBook.imageUrl" 
-              [alt]="group.currentBook.title"
-              *ngIf="group.currentBook.imageUrl"
-              class="book-cover"
-            >
-            <div class="book-info">
-              <h3>{{ group.currentBook.title }}</h3>
+              <!-- Member Badge -->
+              <div *ngIf="isGroupMember(currentUser)" class="member-badge" 
+                   [class.admin]="isGroupAdmin(currentUser)">
+                {{ isGroupAdmin(currentUser) ? 'Admin' : 'Member' }}
+              </div>
             </div>
           </div>
-        </section>
+        </div>
   
-        <!-- Meeting Details -->
-        <section class="content-section" *ngIf="group.meetingDay || group.meetingTime">
-          <h2>Meeting Schedule</h2>
-          <div class="meeting-details">
-            <p *ngIf="group.meetingDay">
-              <strong>Day:</strong> {{ group.meetingDay }}
-            </p>
-            <p *ngIf="group.meetingTime">
-              <strong>Time:</strong> {{ group.meetingTime }}
-            </p>
-          </div>
-        </section>
+        <!-- Group Info -->
+        <div class="group-info">
+          <!-- About Section -->
+          <section class="content-section">
+            <h2>About</h2>
+            <p>{{ group.description }}</p>
+          </section>
   
-        <!-- Members -->
-        <section class="content-section">
-          <h2>Members</h2>
-          <div class="members-count">
-            {{ group.memberCount }} {{ group.memberCount === 1 ? 'member' : 'members' }}
-            <span *ngIf="group.maxMembers">
-              (Max: {{ group.maxMembers }})
-            </span>
-          </div>
-        </section>
+          <!-- Current Book Section -->
+          <section class="content-section" *ngIf="group.currentBook">
+            <h2>Currently Reading</h2>
+            <div class="current-book">
+              <img 
+                *ngIf="group.currentBook.imageUrl"
+                [src]="group.currentBook.imageUrl" 
+                [alt]="group.currentBook.title"
+                class="book-cover"
+              >
+              <div class="book-info">
+                <h3>{{ group.currentBook.title }}</h3>
+              </div>
+            </div>
+          </section>
   
-        <!-- Tags -->
-        <section class="content-section" *ngIf="group.tags?.length">
-          <h2>Tags</h2>
-          <div class="tags">
-            <span class="tag" *ngFor="let tag of group.tags">
-              {{ tag }}
-            </span>
-          </div>
-        </section>
+          <!-- Members Section -->
+          <section class="content-section">
+            <div class="section-header">
+              <h2>Members ({{ group.memberCount }})</h2>
+              <button class="toggle-button" (click)="toggleMembersList()">
+                {{ showMembersList ? 'Hide' : 'Show' }} Members
+              </button>
+            </div>
+  
+            <div class="members-list" *ngIf="showMembersList">
+              <div *ngFor="let email of group.memberEmails" class="member-item">
+                <span class="member-email">{{ email }}</span>
+              </div>
+            </div>
+          </section>
+  
+          <!-- Meeting Schedule -->
+          <section class="content-section" *ngIf="group.meetingDay || group.meetingTime">
+            <h2>Meeting Schedule</h2>
+            <div class="meeting-details">
+              <p *ngIf="group.meetingDay"><strong>Day:</strong> {{ group.meetingDay }}</p>
+              <p *ngIf="group.meetingTime"><strong>Time:</strong> {{ group.meetingTime }}</p>
+            </div>
+          </section>
+  
+          <!-- Tags -->
+          <section class="content-section" *ngIf="group.tags?.length">
+            <h2>Tags</h2>
+            <div class="tags">
+              <span class="tag" *ngFor="let tag of group.tags">{{ tag }}</span>
+            </div>
+          </section>
+        </div>
       </div>
     </ng-container>
   </div>

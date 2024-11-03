@@ -1,21 +1,12 @@
-// export interface ReadingGroup {
-//     id: string;
-//     name: string;
-//     description: string;
-//     memberCount: number;
-//     currentBook?: {
-//       title: string;
-//       imageUrl: string;
-//     };
-//     nextMeeting?: Date;
-// }
+// reading-group.interface.ts
 export interface ReadingGroup {
   id?: string;
   name: string;
   description: string;
   coverImage?: string;
   adminId: string;
-  memberIds: string[];  // Changed from any to string[]
+  memberIds: string[];
+  memberEmails: string[];
   memberCount: number;
   currentBook?: {
     id: string;

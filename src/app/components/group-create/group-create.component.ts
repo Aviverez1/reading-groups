@@ -69,6 +69,7 @@ export class GroupCreateComponent {
         ...this.groupForm.value,
         adminId: user.uid,
         memberIds: [user.uid],
+        memberEmails: [user.email], // Add this line to include admin's email
         memberCount: 1,
         createdAt: new Date(),
         currentBook: this.selectedBook ? {

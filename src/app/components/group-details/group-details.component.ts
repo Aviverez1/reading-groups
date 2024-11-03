@@ -1,6 +1,6 @@
-// src/app/modules/groups/components/group-details/group-details.component.ts
+// group-details.component.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../services/auth.service';
@@ -18,9 +18,12 @@ export class GroupDetailsComponent implements OnInit {
   isLoading = true;
   error = '';
   isJoining = false;
+  showMembersList = false;
+  isEditing = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private firebaseService: FirebaseService,
     private authService: AuthService
   ) {
@@ -56,33 +59,7 @@ export class GroupDetailsComponent implements OnInit {
     return this.group.adminId === user.uid;
   }
 
-  // async joinGroup(user: User) {
-  //   if (!this.group || this.isGroupMember(user)) return;
-
-  //   this.isJoining = true;
-  //   this.error = '';
-
-  //   try {
-  //     const updatedGroup = {
-  //       ...this.group,
-  //       memberIds: [...this.group.memberIds, user.uid],
-  //       memberCount: this.group.memberCount + 1
-  //     };
-
-  //     await this.firebaseService.updateDocument('groups', this.group.id!, {
-  //       memberIds: updatedGroup.memberIds,
-  //       memberCount: updatedGroup.memberCount
-  //     });
-
-  //     this.group = updatedGroup;
-  //   } catch (error) {
-  //     this.error = 'Failed to join the group';
-  //     console.error('Error joining group:', error);
-  //   } finally {
-  //     this.isJoining = false;
-  //   }
-  // }
-  // src/app/modules/groups/components/group-details/group-details.component.ts
+// group-details.component.ts
   async joinGroup(user: User) {
     if (!this.group || this.isGroupMember(user)) return;
 
@@ -90,19 +67,54 @@ export class GroupDetailsComponent implements OnInit {
     this.error = '';
 
     try {
+      // Ensure memberEmails exists
+      const currentMemberEmails = this.group.memberEmails || [];
       const updatedMemberIds = [...this.group.memberIds, user.uid];
+      const updatedMemberEmails = [...currentMemberEmails, user.email || ''];
+      
+      console.log('Current memberEmails:', currentMemberEmails);
+      console.log('Updated memberEmails:', updatedMemberEmails);
+      
       const updatedData = {
         memberIds: updatedMemberIds,
-        memberCount: updatedMemberIds.length  // Set memberCount to the length of memberIds
+        memberEmails: updatedMemberEmails,
+        memberCount: updatedMemberIds.length
       };
 
       await this.firebaseService.updateDocument('groups', this.group.id!, updatedData);
-      await this.loadGroup(this.group.id!); // Reload the group to get updated data
+      
+      const updatedGroup = await this.firebaseService.getDocumentById('groups', this.group.id!);
+      this.group = updatedGroup;
+      
+      console.log('Updated group memberEmails:', this.group.memberEmails);
     } catch (error) {
       this.error = 'Failed to join the group';
       console.error('Error joining group:', error);
     } finally {
       this.isJoining = false;
     }
+  }
+
+  toggleMembersList() {
+    this.showMembersList = !this.showMembersList;
+  }
+
+  async deleteGroup() {
+    if (!this.group || !window.confirm('Are you sure you want to delete this group?')) {
+      return;
+    }
+
+    try {
+      await this.firebaseService.deleteDocument('groups', this.group.id!);
+      this.router.navigate(['/groups']);
+    } catch (error) {
+      console.error('Error deleting group:', error);
+      this.error = 'Failed to delete group';
+    }
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+    // TODO: Implement edit functionality
   }
 }
