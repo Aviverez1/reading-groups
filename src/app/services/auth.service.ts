@@ -20,10 +20,10 @@ export class AuthService implements OnDestroy {
   private authStateUnsubscribe: any;
 
   constructor() {
-    this.userSubject.next(null);
-    // this.authStateUnsubscribe = onAuthStateChanged(this.auth, (user) => {
-    //   //this.userSubject.next(user);
-    // });
+    // Listen to auth state changes
+    this.authStateUnsubscribe = onAuthStateChanged(this.auth, (user) => {
+      this.userSubject.next(user);
+    });
   }
 
   ngOnDestroy() {

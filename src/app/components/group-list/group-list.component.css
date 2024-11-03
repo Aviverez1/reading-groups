@@ -82,3 +82,9 @@
       grid-template-columns: 1fr;
     }
   }
+
+  .line-break {
+    display: block;
+    margin-top: 10px; /* optional: add space between lines */
+  }
+  

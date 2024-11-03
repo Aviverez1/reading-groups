@@ -1,43 +1,51 @@
 <!-- navbar.component.html -->
 <nav class="navbar">
-    <div class="nav-container">
-      <!-- Logo/Brand -->
-      <a routerLink="/" class="brand">
-        📚 Reading Groups
+  <div class="nav-container">
+    <!-- Logo/Brand -->
+    <a routerLink="/" class="brand">
+      📚 Reading Groups
+    </a>
+
+    <!-- Mobile Menu Button -->
+    <button class="menu-button" (click)="toggleMenu()">
+      <span class="menu-icon"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="nav-links" [class.active]="isMenuOpen">
+      <a routerLink="/" 
+         [class.active]="isActive('/')" 
+         (click)="isMenuOpen = false">
+        Home
       </a>
-  
-      <!-- Mobile Menu Button -->
-      <button class="menu-button" (click)="toggleMenu()">
-        <span class="menu-icon"></span>
-      </button>
-  
-      <!-- Navigation Links -->
-      <div class="nav-links" [class.active]="isMenuOpen">
-        <a routerLink="/" 
-           [class.active]="isActive('/')" 
-           (click)="isMenuOpen = false">
-          Home
-        </a>
-        <a routerLink="/groups" 
-           [class.active]="isActive('/groups')"
-           (click)="isMenuOpen = false">
-          Groups
-        </a>
-        <a routerLink="/books" 
-           [class.active]="isActive('/books')"
-           (click)="isMenuOpen = false">
-          Books
-        </a>
-      </div>
-  
-      <!-- Auth Buttons -->
-      <div class="auth-buttons" [class.active]="isMenuOpen">
+      <a routerLink="/groups" 
+         [class.active]="isActive('/groups')"
+         (click)="isMenuOpen = false">
+        Groups
+      </a>
+      <a routerLink="/books" 
+         [class.active]="isActive('/books')"
+         (click)="isMenuOpen = false">
+        Books
+      </a>
+    </div>
+
+    <!-- Auth Buttons -->
+    <div class="auth-buttons" [class.active]="isMenuOpen">
+      <ng-container *ngIf="user$ | async as user; else loginButtons">
+        <span class="user-email">{{ user.email }}</span>
+        <button class="btn-logout" (click)="logout()">
+          Logout
+        </button>
+      </ng-container>
+      <ng-template #loginButtons>
         <button class="btn-login" routerLink="/auth/login">
           Login
         </button>
         <button class="btn-signup" routerLink="/auth/signup">
           Sign Up
         </button>
-      </div>
+      </ng-template>
     </div>
+  </div>
 </nav>
