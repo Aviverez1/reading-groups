@@ -59,7 +59,6 @@ export class GroupDetailsComponent implements OnInit {
     return this.group.adminId === user.uid;
   }
 
-// group-details.component.ts
   async joinGroup(user: User) {
     if (!this.group || this.isGroupMember(user)) return;
 
@@ -67,13 +66,9 @@ export class GroupDetailsComponent implements OnInit {
     this.error = '';
 
     try {
-      // Ensure memberEmails exists
       const currentMemberEmails = this.group.memberEmails || [];
       const updatedMemberIds = [...this.group.memberIds, user.uid];
       const updatedMemberEmails = [...currentMemberEmails, user.email || ''];
-      
-      console.log('Current memberEmails:', currentMemberEmails);
-      console.log('Updated memberEmails:', updatedMemberEmails);
       
       const updatedData = {
         memberIds: updatedMemberIds,
@@ -82,11 +77,7 @@ export class GroupDetailsComponent implements OnInit {
       };
 
       await this.firebaseService.updateDocument('groups', this.group.id!, updatedData);
-      
-      const updatedGroup = await this.firebaseService.getDocumentById('groups', this.group.id!);
-      this.group = updatedGroup;
-      
-      console.log('Updated group memberEmails:', this.group.memberEmails);
+      await this.loadGroup(this.group.id!);
     } catch (error) {
       this.error = 'Failed to join the group';
       console.error('Error joining group:', error);
@@ -97,6 +88,32 @@ export class GroupDetailsComponent implements OnInit {
 
   toggleMembersList() {
     this.showMembersList = !this.showMembersList;
+  }
+
+  async handleFormSubmit(formData: any) {
+    if (!this.group) return;
+
+    try {
+      // Preserve existing member data
+      const updatedData = {
+        ...formData,
+        memberIds: this.group.memberIds,
+        memberEmails: this.group.memberEmails,
+        memberCount: this.group.memberCount,
+        adminId: this.group.adminId
+      };
+
+      await this.firebaseService.updateDocument('groups', this.group.id!, updatedData);
+      this.isEditing = false;
+      await this.loadGroup(this.group.id!);
+    } catch (error) {
+      console.error('Error updating group:', error);
+      this.error = 'Failed to update group';
+    }
+  }
+
+  handleFormCancel() {
+    this.isEditing = false;
   }
 
   async deleteGroup() {
@@ -115,6 +132,5 @@ export class GroupDetailsComponent implements OnInit {
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
-    // TODO: Implement edit functionality
   }
 }

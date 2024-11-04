@@ -1,60 +1,114 @@
 <!-- group-details.component.html -->
 <div class="group-details-container">
-    <div *ngIf="isLoading" class="loading-state">
-      <div class="loader"></div>
-      <p>Loading group details...</p>
-    </div>
-  
-    <div *ngIf="error" class="error-message">
-      {{ error }}
-    </div>
-  
-    <ng-container *ngIf="currentUser$ | async as currentUser; else loginPrompt">
-      <div *ngIf="group && !isLoading" class="group-content">
-        <div class="group-header">
-          <div class="group-title-section">
-            <h1>{{ group.name }}</h1>
-            
-            <div class="action-buttons">
-              <!-- Admin Actions -->
-              <ng-container *ngIf="isGroupAdmin(currentUser)">
-                <button class="edit-button" (click)="toggleEdit()">
-                  {{ isEditing ? 'Cancel Edit' : 'Edit Group' }}
-                </button>
-                <button class="delete-button" (click)="deleteGroup()">
-                  Delete Group
-                </button>
-              </ng-container>
-  
-              <!-- Join Button -->
-              <button 
-                *ngIf="!isGroupMember(currentUser)"
-                (click)="joinGroup(currentUser)"
-                [disabled]="isJoining"
-                class="join-button"
-              >
-                {{ isJoining ? 'Joining...' : 'Join Group' }}
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loader"></div>
+    <p>Loading group details...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <ng-container *ngIf="currentUser$ | async as currentUser; else loginPrompt">
+    <div *ngIf="group && !isLoading" class="group-content">
+      <div class="group-header">
+        <div class="group-title-section">
+          <h1>{{ group.name }}</h1>
+          
+          <div class="action-buttons">
+            <!-- Admin Actions -->
+            <ng-container *ngIf="isGroupAdmin(currentUser)">
+              <button class="edit-button" (click)="toggleEdit()">
+                <i class="fas fa-edit"></i>
+                Edit Group
               </button>
-  
-              <!-- Member Badge -->
-              <div *ngIf="isGroupMember(currentUser)" class="member-badge" 
-                   [class.admin]="isGroupAdmin(currentUser)">
-                {{ isGroupAdmin(currentUser) ? 'Admin' : 'Member' }}
-              </div>
+              <button class="delete-button" (click)="deleteGroup()">
+                <i class="fas fa-trash-alt"></i>
+                Delete Group
+              </button>
+            </ng-container>
+
+            <!-- Join Button -->
+            <button 
+              *ngIf="!isGroupMember(currentUser)"
+              (click)="joinGroup(currentUser)"
+              [disabled]="isJoining"
+              class="join-button"
+            >
+              <i class="fas fa-user-plus"></i>
+              {{ isJoining ? 'Joining...' : 'Join Group' }}
+            </button>
+
+            <!-- Member Badge -->
+            <div *ngIf="isGroupMember(currentUser)" class="member-badge" 
+                 [class.admin]="isGroupAdmin(currentUser)">
+              <i class="fas" [class.fa-user-shield]="isGroupAdmin(currentUser)" [class.fa-user]="!isGroupAdmin(currentUser)"></i>
+              {{ isGroupAdmin(currentUser) ? 'Admin' : 'Member' }}
             </div>
           </div>
         </div>
-  
-        <!-- Group Info -->
-        <div class="group-info">
+      </div>
+
+      <!-- Group Info -->
+      <div class="group-info">
+        <div class="main-content">
           <!-- About Section -->
           <section class="content-section">
             <h2>About</h2>
             <p>{{ group.description }}</p>
           </section>
-  
+
+          <!-- Meeting Schedule -->
+          <section class="content-section" *ngIf="group.meetingDay || group.meetingTime">
+            <h2>Meeting Schedule</h2>
+            <div class="meeting-details">
+              <div class="meeting-info">
+                <i class="fas fa-calendar"></i>
+                <span *ngIf="group.meetingDay"> {{ group.meetingDay }}</span>
+              </div>
+              <div class="meeting-info" *ngIf="group.meetingTime">
+                <i class="fas fa-clock"></i>
+                <span> {{ group.meetingTime }}</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Tags -->
+          <section class="content-section" *ngIf="group.tags?.length">
+            <h2>Tags</h2>
+            <div class="tags">
+              <span class="tag" *ngFor="let tag of group.tags">
+                <i class="fas fa-tag"></i>
+                {{ tag }}
+              </span>
+            </div>
+          </section>
+        </div>
+
+        <div class="side-content">
+          <!-- Members Section -->
+          <section class="content-section members-section">
+            <div class="section-header">
+              <h2>Members ({{ group.memberCount }})</h2>
+              <button class="toggle-button" (click)="toggleMembersList()">
+                <i class="fas" [class.fa-chevron-down]="!showMembersList" [class.fa-chevron-up]="showMembersList"></i>
+                {{ showMembersList ? 'Hide' : 'Show' }}
+              </button>
+            </div>
+
+            <div class="members-list" *ngIf="showMembersList">
+              <div *ngFor="let email of group.memberEmails" class="member-item">
+                <span class="member-email">
+                  <i class="fas fa-user"></i>
+                  {{ email }}
+                </span>
+                <span class="member-role" *ngIf="email === group.memberEmails[0]">Admin</span>
+              </div>
+            </div>
+          </section>
+
           <!-- Current Book Section -->
-          <section class="content-section" *ngIf="group.currentBook">
+          <section class="content-section current-book-section" *ngIf="group.currentBook">
             <h2>Currently Reading</h2>
             <div class="current-book">
               <img 
@@ -68,46 +122,26 @@
               </div>
             </div>
           </section>
-  
-          <!-- Members Section -->
-          <section class="content-section">
-            <div class="section-header">
-              <h2>Members ({{ group.memberCount }})</h2>
-              <button class="toggle-button" (click)="toggleMembersList()">
-                {{ showMembersList ? 'Hide' : 'Show' }} Members
-              </button>
-            </div>
-  
-            <div class="members-list" *ngIf="showMembersList">
-              <div *ngFor="let email of group.memberEmails" class="member-item">
-                <span class="member-email">{{ email }}</span>
-              </div>
-            </div>
-          </section>
-  
-          <!-- Meeting Schedule -->
-          <section class="content-section" *ngIf="group.meetingDay || group.meetingTime">
-            <h2>Meeting Schedule</h2>
-            <div class="meeting-details">
-              <p *ngIf="group.meetingDay"><strong>Day:</strong> {{ group.meetingDay }}</p>
-              <p *ngIf="group.meetingTime"><strong>Time:</strong> {{ group.meetingTime }}</p>
-            </div>
-          </section>
-  
-          <!-- Tags -->
-          <section class="content-section" *ngIf="group.tags?.length">
-            <h2>Tags</h2>
-            <div class="tags">
-              <span class="tag" *ngFor="let tag of group.tags">{{ tag }}</span>
-            </div>
-          </section>
         </div>
       </div>
-    </ng-container>
-  
-    <ng-template #loginPrompt>
-      <div class="login-prompt">
-        <p>In order to see the group, you must <a routerLink="/auth/login">log in</a>.</p>
+
+      <!-- Edit Form Overlay -->
+      <div class="edit-form-overlay" *ngIf="isEditing">
+        <div class="edit-form-container">
+          <app-group-form
+            mode="edit"
+            [initialData]="group"
+            (formSubmit)="handleFormSubmit($event)"
+            (formCancel)="handleFormCancel()"
+          ></app-group-form>
+        </div>
       </div>
-    </ng-template>
-  </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loginPrompt>
+    <div class="login-prompt">
+      <p>Please <a routerLink="/auth/login">log in</a> to view group details.</p>
+    </div>
+  </ng-template>
+</div>
