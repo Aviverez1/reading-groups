@@ -5,11 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GroupFormComponent } from '../group-form/group-form.component';
 import { BookSearchComponent } from '../../books/book-search.component';
+import { GroupCardComponent } from '../group-card/group-card.component';
 
 @NgModule({
   declarations: [
     GroupFormComponent,
-    BookSearchComponent
+    BookSearchComponent,
+    GroupCardComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { BookSearchComponent } from '../../books/book-search.component';
   exports: [
     GroupFormComponent,
     BookSearchComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GroupCardComponent
   ]
 })
 export class SharedModule { }

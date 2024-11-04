@@ -39,19 +39,20 @@
 
 /* Featured Groups Section */
 .featured-groups {
-  margin-bottom: 40px;
+  margin-bottom: 20px; /* Reduced margin */
 }
 
 .featured-groups h2 {
-  margin-bottom: 30px;
+  margin-top: 50px;
   text-align: center;
 }
 
 .groups-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-  margin-bottom: 30px;
+  gap: 20px; /* Reduced gap */
+  margin-bottom: 20px; /* Reduced margin */
+  padding: 50px; /* Added padding */
 }
 
 .group-card {

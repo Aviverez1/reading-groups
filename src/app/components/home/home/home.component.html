@@ -25,29 +25,10 @@
       </div>
   
       <div class="groups-grid" *ngIf="!isLoading && !error">
-        <div class="group-card" *ngFor="let group of featuredGroups">
-          <div class="group-card-content">
-            <div class="group-book-cover" *ngIf="group.currentBook?.imageUrl">
-              <img [src]="group.currentBook?.imageUrl" [alt]="group.currentBook?.title">
-            </div>
-            <div class="group-info">
-              <h3>{{ group.name }}</h3>
-              <p class="group-description">{{ group.description }}</p>
-              <p class="group-description">Reading: {{ group.currentBook?.title }}</p>
-              <div class="group-meta">
-                <span>{{ group.memberCount }} members</span>
-                <span *ngIf="group.nextMeeting">
-                  Next meeting: {{ group.nextMeeting | date:'shortDate' }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="group-card-actions">
-            <button class="btn secondary" [routerLink]="['/groups', group.id]">
-              View Group
-            </button>
-          </div>
-        </div>
+        <app-group-card 
+          *ngFor="let group of featuredGroups" 
+          [group]="group"
+        ></app-group-card>
       </div>
   
       <div class="view-all-link" *ngIf="featuredGroups.length > 0">
