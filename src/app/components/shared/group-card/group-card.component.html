@@ -2,29 +2,29 @@
 <div class="group-card">
   <div class="group-cover" [style.backgroundImage]="group.coverImage ? 'url(' + group.coverImage + ')' : 'linear-gradient(45deg, #6b48ff, #8466ff)'">
     <div class="group-members-badge">
-    <i class="fas fa-users"></i>{{ group.memberCount }} members
+      <i class="fas fa-users"></i>{{ group.memberCount }} members
     </div>
   </div>
   
   <div class="group-content">
     <div class="group-info">
-    <h3>{{ group.name }}</h3>
-    <p class="description">{{ group.description }}</p>
-    
+      <h3>{{ group.name }}</h3>
+      <p class="description">{{ group.description }}</p>
+      
+      <div class="group-tags" *ngIf="group.tags?.length">
+        <span class="tag" *ngFor="let tag of group.tags">{{ tag }}</span>
+      </div>
+    </div>
+
     <div class="current-book" *ngIf="group.currentBook">
       <div class="book-label">Currently Reading:</div>
       <div class="book-title">{{ group.currentBook.title }}</div>
     </div>
-    
-    <div class="group-tags" *ngIf="group.tags?.length">
-      <span class="tag" *ngFor="let tag of group.tags">{{ tag }}</span>
-    </div>
-    </div>
 
     <div class="group-actions">
-    <button [routerLink]="['/groups', group.id]">
-      <i class="fas fa-arrow-right"></i> View Details
-    </button>
+      <button [routerLink]="['/groups', group.id]">
+        <i class="fas fa-arrow-right"></i> View Details
+      </button>
     </div>
   </div>
 </div>

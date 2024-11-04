@@ -1,171 +1,172 @@
 /* src/app/components/shared/group-card/group-card.component.css */
 /* Base Card Styles */
 .group-card {
-    border-radius: 12px;
-    background: white;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .group-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
-  
-  /* List Style */
-  .group-cover {
-    height: 160px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 16px;
-  }
-  
-  .group-members-badge {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: #6b48ff;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .group-content {
-    padding: 20px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .group-info {
-    flex-grow: 1;
-  }
-  
-  .group-info h3 {
-    margin: 0 0 12px 0;
-    color: #2c3e50;
-    font-size: 1.4rem;
-  }
-  
-  .description {
-    color: #64748b;
-    margin-bottom: 16px;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  /* Home Style */
-  .group-card-content {
-    padding: 20px;
-    flex-grow: 1;
-  }
-  
-  .group-book-cover {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    margin-bottom: 15px;
-  }
-  
-  .group-book-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .group-description {
-    color: #666;
-    margin-bottom: 15px;
-  }
-  
+  border-radius: 12px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.group-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* List Style */
+.group-cover {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.group-members-badge {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #6b48ff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.group-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-info {
+  flex-grow: 1;
+}
+
+.group-info h3 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 1.4rem;
+}
+
+.description {
+  color: #64748b;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Home Style */
+.group-card-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.group-book-cover {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.group-book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.group-description {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.group-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #888;
+  font-size: 0.9em;
+}
+
+/* Shared Styles */
+.current-book {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-top: auto; /* Ensure it is positioned at the bottom */
+}
+
+.book-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.book-title {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.group-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tag {
+  padding: 4px 12px;
+  background: #f0f4ff;
+  color: #6b48ff;
+  border-radius: 16px;
+  font-size: 0.85rem;
+}
+
+.group-actions {
+  margin-top: 16px; /* Ensure it is positioned below the current book section */
+  text-align: right;
+}
+
+.group-actions button {
+  width: 100%;
+  padding: 12px 24px;
+  background: #6b48ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.group-actions button:hover {
+  background: #5536ff;
+}
+
+.group-card-actions {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .group-meta {
-    display: flex;
-    justify-content: space-between;
-    color: #888;
-    font-size: 0.9em;
+    flex-direction: column;
+    gap: 5px;
   }
-  
-  /* Shared Styles */
-  .current-book {
-    margin-bottom: 16px;
-    padding: 12px;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-  
-  .book-label {
-    font-size: 0.9rem;
-    color: #64748b;
-    margin-bottom: 4px;
-  }
-  
-  .book-title {
-    color: #2c3e50;
-    font-weight: 500;
-  }
-  
-  .group-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-  }
-  
-  .tag {
-    padding: 4px 12px;
-    background: #f0f4ff;
-    color: #6b48ff;
-    border-radius: 16px;
-    font-size: 0.85rem;
-  }
-  
-  .group-actions {
-    margin-top: auto;
-    text-align: right;
-  }
-  
-  .group-actions button {
-    width: 100%;
-    padding: 12px 24px;
-    background: #6b48ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: background-color 0.2s;
-  }
-  
-  .group-actions button:hover {
-    background: #5536ff;
-  }
-  
-  .group-card-actions {
-    padding: 15px 20px;
-    border-top: 1px solid #eee;
-    text-align: right;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .group-meta {
-      flex-direction: column;
-      gap: 5px;
-    }
-  }
+}
