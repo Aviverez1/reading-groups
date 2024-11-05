@@ -283,27 +283,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Login Prompt */
-.login-prompt {
-  text-align: center;
-  padding: 40px;
-  background: #fff3cd;
-  border: 1px solid #ffeeba;
-  border-radius: 8px;
-  color: #856404;
-  margin-top: 20px;
-}
-
-.login-prompt a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.login-prompt a:hover {
-  text-decoration: underline;
-}
-
 /* Edit Form Overlay */
 .edit-form-overlay {
   position: fixed;

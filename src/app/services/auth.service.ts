@@ -88,6 +88,8 @@ export class AuthService implements OnDestroy {
         return 'No account found with this email';
       case 'auth/wrong-password':
         return 'Incorrect password';
+      case 'auth/invalid-credential':
+        return 'Incorrect password/email';
       default:
         return 'An error occurred during authentication';
     }
