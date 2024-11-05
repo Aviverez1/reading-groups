@@ -73,6 +73,44 @@
             </div>
           </section>
 
+          <section class="content-section">
+            <h2>Discussion</h2>
+            
+            <!-- Comments List -->
+            <div class="comments-list">
+              <div *ngFor="let comment of group.comments" class="comment-item">
+                <div class="comment-header">
+                  <p class="comment-content"><strong>{{ comment.username }}:</strong> {{ comment.content }}</p>
+                </div>
+              </div>
+
+              <div *ngIf="!group.comments?.length" class="no-comments">
+                No comments yet. Be the first to start the discussion!
+              </div>
+            </div>
+
+            <!-- Add Comment Form -->
+            <div class="add-comment" *ngIf="isGroupMember(currentUser)">
+              <textarea 
+                [(ngModel)]="newComment" 
+                placeholder="Write a comment..."
+                class="comment-input"
+              ></textarea>
+              <button 
+                (click)="addComment(currentUser)" 
+                class="add-comment-button"
+                [disabled]="!newComment.trim()"
+              >
+                <i class="fas fa-paper-plane"></i>
+                Add Comment
+              </button>
+            </div>
+
+            <div *ngIf="!isGroupMember(currentUser)" class="join-to-comment">
+              Join the group to participate in discussions!
+            </div>
+          </section>
+
           <!-- Tags -->
           <section class="content-section" *ngIf="group.tags?.length">
             <h2>Tags</h2>
@@ -138,5 +176,4 @@
       </div>
     </div>
   </ng-container>
-
 </div>

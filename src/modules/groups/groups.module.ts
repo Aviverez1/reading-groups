@@ -8,6 +8,7 @@ import { GroupCreateComponent } from '../../app/components/group-create/group-cr
 import { GroupListComponent } from '../../app/components/group-list/group-list.component';
 import { GroupDetailsComponent } from '../../app/components/group-details/group-details.component';
 import { SharedModule } from '../../app/components/shared/navbar/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from '../../app/components/shared/navbar/shared.module';
     CommonModule,
     ReactiveFormsModule,
     GroupsRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class GroupsModule { }

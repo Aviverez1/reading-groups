@@ -63,7 +63,7 @@ export class FirebaseService {
           description: data['description'],
           adminId: data['adminId'],
           memberIds: data['memberIds'] || [],
-          memberEmails: data['memberEmails'] || [], // Add this line
+          memberEmails: data['memberEmails'] || [],
           memberCount: data['memberIds']?.length || 0,
           createdAt: data['createdAt']?.toDate() || new Date(),
           currentBook: data['currentBook'],
@@ -73,7 +73,8 @@ export class FirebaseService {
           tags: data['tags'] || [],
           coverImage: data['coverImage'],
           lastUpdated: data['lastUpdated']?.toDate(),
-          nextMeeting: data['nextMeeting']?.toDate()
+          nextMeeting: data['nextMeeting']?.toDate(),
+          comments: data['comments'] || []  // Add this line to include comments
         } as ReadingGroup;
       } else {
         throw new Error('Document not found');

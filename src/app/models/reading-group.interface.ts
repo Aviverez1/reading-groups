@@ -20,4 +20,8 @@ export interface ReadingGroup {
   tags?: string[];
   lastUpdated?: Date;
   nextMeeting?: Date;
+  comments?: {
+    username: string;
+    content: string;
+  }[];
 }

@@ -6,6 +6,7 @@ import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../services/auth.service';
 import { ReadingGroup } from '../../models/reading-group.interface';
 import { User } from 'firebase/auth';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-group-details',
@@ -20,6 +21,7 @@ export class GroupDetailsComponent implements OnInit {
   isJoining = false;
   showMembersList = false;
   isEditing = false;
+  newComment: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -86,6 +88,29 @@ export class GroupDetailsComponent implements OnInit {
     }
   }
 
+  async addComment(user: User) {
+    if (!this.group || !this.newComment.trim() || !user.email) return;
+
+    try {
+      const username = user.email.split('@')[0];
+      const comment = {
+        username,
+        content: this.newComment.trim()
+      };
+
+      const updatedComments = [...(this.group.comments || []), comment];
+      const updatedData = {
+        comments: updatedComments
+      };
+      await this.firebaseService.updateDocument('groups', this.group.id!, updatedData);
+      await this.loadGroup(this.group.id!);
+      this.newComment = '';
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      this.error = 'Failed to add comment';
+    }
+  }
+
   toggleMembersList() {
     this.showMembersList = !this.showMembersList;
   }
@@ -94,7 +119,6 @@ export class GroupDetailsComponent implements OnInit {
     if (!this.group) return;
 
     try {
-      // Preserve existing member data
       const updatedData = {
         ...formData,
         memberIds: this.group.memberIds,
