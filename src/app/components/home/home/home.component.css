@@ -206,6 +206,14 @@
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; 
+    margin-bottom: 20px; 
+    padding: 20px; 
+  }
+
   .hero-section {
     padding: 40px 20px;
   }
