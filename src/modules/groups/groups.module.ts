@@ -9,12 +9,14 @@ import { GroupListComponent } from '../../app/components/group-list/group-list.c
 import { GroupDetailsComponent } from '../../app/components/group-details/group-details.component';
 import { SharedModule } from '../../app/components/shared/navbar/shared.module';
 import { FormsModule } from '@angular/forms';
+import { CommentsComponent } from '../../app/components/group-details/comments/comments.component';
 
 @NgModule({
   declarations: [
     GroupCreateComponent,
     GroupListComponent,
-    GroupDetailsComponent
+    GroupDetailsComponent,
+    CommentsComponent
   ],
   imports: [
     CommonModule,

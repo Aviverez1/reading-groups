@@ -22,6 +22,7 @@ export class GroupDetailsComponent implements OnInit {
   showMembersList = false;
   isEditing = false;
   newComment: string = '';
+  groupId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,13 +34,13 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    const groupId = this.route.snapshot.paramMap.get('id');
-    if (groupId) {
-      this.loadGroup(groupId);
+    this.groupId = this.route.snapshot.paramMap.get('id');
+    if (this.groupId) {
+      this.loadGroup(this.groupId);
     }
   }
 
-  private async loadGroup(groupId: string) {
+  async loadGroup(groupId: string) {
     try {
       const data = await this.firebaseService.getDocumentById('groups', groupId);
       this.group = data as ReadingGroup;
