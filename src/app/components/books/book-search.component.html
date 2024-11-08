@@ -30,6 +30,9 @@
          (click)="selectBook(book)"
          [class.clickable]="true">
       <div class="book-cover">
+        <button class="expand-button" (click)="showBookDetails(book, $event)">
+          <i class="fas fa-expand-alt"></i>
+        </button>
         <img 
           [src]="book.imageLinks?.thumbnail || 'assets/no-cover.png'" 
           [alt]="book.title"
@@ -49,4 +52,11 @@
   <div *ngIf="!isLoading && searchControl.value && books.length === 0" class="no-results">
     No books found matching your search.
   </div>
+
+  <!-- Book Details Modal -->
+  <app-book-details
+    *ngIf="selectedBook"
+    [book]="selectedBook"
+    (onClose)="closeBookDetails()"
+  ></app-book-details>
 </div>

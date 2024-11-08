@@ -1,0 +1,49 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Book Details</h2>
+        <button class="close-button" (click)="close()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="book-grid">
+          <div class="book-image">
+            <img 
+              [src]="book.imageLinks?.thumbnail || 'assets/no-cover.png'" 
+              [alt]="book.title"
+            >
+          </div>
+          <div class="book-info">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-authors">By {{ book.authors.join(', ') || 'Unknown Author' }}</p>
+            
+            <div class="detail-row" *ngIf="book.publishedDate">
+              <span class="label">Published:</span>
+              <span>{{ book.publishedDate | date:'mediumDate' }}</span>
+            </div>
+            
+            <div class="detail-row" *ngIf="book.pageCount">
+              <span class="label">Pages:</span>
+              <span>{{ book.pageCount }}</span>
+            </div>
+            
+            <div class="detail-row" *ngIf="book.categories?.length">
+              <span class="label">Categories:</span>
+              <div class="categories">
+                <span class="category" *ngFor="let category of book.categories">
+                  {{ category }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="description" *ngIf="book.description">
+              <h4>Description</h4>
+              <p>{{ book.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

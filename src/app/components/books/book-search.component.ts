@@ -19,6 +19,7 @@ export class BookSearchComponent implements OnInit {
   books: Book[] = [];
   error: string = '';
   isLoading: boolean = false;
+  selectedBook: Book | null = null;
 
   constructor(private booksService: BooksService) {}
 
@@ -55,5 +56,14 @@ export class BookSearchComponent implements OnInit {
 
   cancel() {
     this.cancelled.emit();
+  }
+
+  showBookDetails(book: Book, event: Event) {
+    event.stopPropagation();
+    this.selectedBook = book;
+  }
+
+  closeBookDetails() {
+    this.selectedBook = null;
   }
 }
