@@ -1,7 +1,7 @@
 // src/app/modules/groups/components/group-list/group-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
-import { HomeComponent } from '../home/home/home.component';
+import { SearchCriteria } from './search-modal/search-modal.component';
 
 @Component({
   selector: 'app-group-list',
@@ -12,6 +12,8 @@ export class GroupListComponent implements OnInit {
   groups: any[] = [];
   isLoading = true;
   error = '';
+  showSearchModal = false;
+  searchResults: any[] | null = null;
 
   constructor(private firebaseService: FirebaseService) {}
 
@@ -28,5 +30,26 @@ export class GroupListComponent implements OnInit {
       this.isLoading = false;
       console.error(error);
     }
+  }
+
+  toggleSearchModal() {
+    this.showSearchModal = !this.showSearchModal;
+  }
+
+  async handleSearch(criteria: SearchCriteria) {
+    try {
+      this.isLoading = true;
+      this.searchResults = await this.firebaseService.searchGroups(criteria);
+      this.showSearchModal = false;
+    } catch (error) {
+      this.error = 'Error searching groups';
+      console.error(error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  clearSearch() {
+    this.searchResults = null;
   }
 }

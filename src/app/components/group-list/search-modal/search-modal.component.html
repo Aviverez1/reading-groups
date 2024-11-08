@@ -1,0 +1,41 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Search Groups</h2>
+        <button class="close-button" (click)="close()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="search-controls">
+        <div class="search-type">
+          <label>Search by:</label>
+          <select [(ngModel)]="searchType">
+            <option value="groupName">Group Name</option>
+            <option value="currentBook">Current Book</option>
+          </select>
+        </div>
+
+        <div class="search-input">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm"
+            [placeholder]="searchType === 'groupName' ? 'Enter group name...' : 'Enter book title...'"
+            (keyup.enter)="search()"
+          >
+        </div>
+
+        <div class="modal-actions">
+          <button class="cancel-button" (click)="close()">Cancel</button>
+          <button 
+            class="search-button" 
+            (click)="search()"
+            [disabled]="!searchTerm.trim()"
+          >
+            <i class="fas fa-search"></i>
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

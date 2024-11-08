@@ -104,4 +104,31 @@ export class FirebaseService {
       throw error;
     }
   }
+
+  async searchGroups(criteria: { searchTerm: string; searchType: 'groupName' | 'currentBook' }): Promise<ReadingGroup[]> {
+    try {
+      const querySnapshot = await getDocs(collection(this.firestore, 'groups'));
+      let results = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      } as ReadingGroup));
+
+      const searchTerm = criteria.searchTerm.toLowerCase();
+
+      if (criteria.searchType === 'groupName') {
+        results = results.filter(group => 
+          group.name.toLowerCase().includes(searchTerm)
+        );
+      } else {
+        results = results.filter(group => 
+          group.currentBook?.title.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      return results;
+    } catch (error) {
+      console.error('Error searching groups:', error);
+      throw error;
+    }
+  }
 }

@@ -10,13 +10,15 @@ import { GroupDetailsComponent } from '../../app/components/group-details/group-
 import { SharedModule } from '../../app/components/shared/navbar/shared.module';
 import { FormsModule } from '@angular/forms';
 import { CommentsComponent } from '../../app/components/group-details/comments/comments.component';
+import { SearchModalComponent } from '../../app/components/group-list/search-modal/search-modal.component';
 
 @NgModule({
   declarations: [
     GroupCreateComponent,
     GroupListComponent,
     GroupDetailsComponent,
-    CommentsComponent
+    CommentsComponent,
+    SearchModalComponent
   ],
   imports: [
     CommonModule,
