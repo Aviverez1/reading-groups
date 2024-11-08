@@ -59,8 +59,10 @@ export class BookSearchComponent implements OnInit {
   }
 
   showBookDetails(book: Book, event: Event) {
+    console.log('showBookDetails');
     event.stopPropagation();
     this.selectedBook = book;
+    console.log(this.selectedBook);
   }
 
   closeBookDetails() {

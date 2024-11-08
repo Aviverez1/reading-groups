@@ -4,7 +4,7 @@ import { Book } from '../../../models/book.interface';
 
 @Component({
   selector: 'app-book-details',
-  template: 'book-details.component.html',
+  templateUrl: './book-details.component.html', 
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent {
