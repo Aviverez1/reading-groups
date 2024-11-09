@@ -236,6 +236,17 @@ select:focus {
 }
 
 @media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    width: 85%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+  }
   .group-form {
     width: 90%;
     padding: 20px;
