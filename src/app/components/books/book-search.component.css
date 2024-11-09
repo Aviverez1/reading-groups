@@ -51,8 +51,8 @@
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
   padding: 20px 0;
 }
 
@@ -75,7 +75,7 @@
 
 .book-cover {
   position: relative;
-  padding-top: 140%; /* 1.4:1 aspect ratio */
+  padding-top: 130%;
   background: #f8f9fa;
   overflow: hidden;
 }
@@ -102,8 +102,8 @@
   background: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,17 +129,17 @@
 }
 
 .book-info {
-  padding: 20px;
+  padding: 15px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   background: white;
 }
 
 .book-title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #2c3e50;
   line-height: 1.4;
@@ -151,7 +151,7 @@
 
 .book-authors {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #64748b;
   line-height: 1.5;
   display: -webkit-box;
@@ -162,7 +162,7 @@
 
 .book-publish-date {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #94a3b8;
   margin-top: auto;
 }
@@ -212,15 +212,15 @@
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
   .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
   }
 }
 
 @media (max-width: 992px) {
   .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
   }
 }
 
@@ -235,12 +235,12 @@
   }
 
   .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 15px;
   }
 
   .book-info {
-    padding: 15px;
+    padding: 12px;
   }
 
   /* Always show expand button on mobile */
@@ -262,23 +262,23 @@
 
   .books-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
   .book-info {
-    padding: 12px;
+    padding: 10px;
   }
 
   .book-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .book-authors {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .book-publish-date {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 
   .search-input {
@@ -288,8 +288,8 @@
   }
 
   .expand-button {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     top: 8px;
     right: 8px;
   }
