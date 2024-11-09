@@ -1,4 +1,4 @@
-// src/app/components/shared/group-form/group-form.component.ts
+// group-form.component.ts
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,9 +24,14 @@ export class GroupFormComponent implements OnInit {
   showBookSearch = false;
   selectedBook: Book | null = null;
 
-  weekDays = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-    'Friday', 'Saturday', 'Sunday'
+  public readonly weekDays: string[] = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
   ];
 
   constructor(
@@ -60,7 +65,6 @@ export class GroupFormComponent implements OnInit {
     this.groupForm.patchValue({
       name: this.initialData.name,
       description: this.initialData.description,
-      meetingDay: this.initialData.meetingDay,
       meetingTime: this.initialData.meetingTime,
       maxMembers: this.initialData.maxMembers,
       tags: this.initialData.tags?.join(', ')
@@ -70,8 +74,10 @@ export class GroupFormComponent implements OnInit {
       this.selectedBook = {
         id: this.initialData.currentBook.id,
         title: this.initialData.currentBook.title,
+        authors: [],
         imageLinks: {
-          thumbnail: this.initialData.currentBook.imageUrl || ''
+          thumbnail: this.initialData.currentBook.imageUrl || '',
+          smallThumbnail: this.initialData.currentBook.imageUrl || ''
         }
       } as Book;
     }
