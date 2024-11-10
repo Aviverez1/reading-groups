@@ -65,6 +65,7 @@ export class GroupFormComponent implements OnInit {
     this.groupForm.patchValue({
       name: this.initialData.name,
       description: this.initialData.description,
+      meetingDay: this.initialData.meetingDay,
       meetingTime: this.initialData.meetingTime,
       maxMembers: this.initialData.maxMembers,
       tags: this.initialData.tags?.join(', ')
@@ -74,7 +75,10 @@ export class GroupFormComponent implements OnInit {
       this.selectedBook = {
         id: this.initialData.currentBook.id,
         title: this.initialData.currentBook.title,
-        authors: [],
+        authors: this.initialData.currentBook.authors || [],
+        description: this.initialData.currentBook.description || '',
+        publishedDate: this.initialData.currentBook.publishedDate || '',
+        pageCount: this.initialData.currentBook.pageCount || 0,
         imageLinks: {
           thumbnail: this.initialData.currentBook.imageUrl || '',
           smallThumbnail: this.initialData.currentBook.imageUrl || ''
@@ -97,7 +101,14 @@ export class GroupFormComponent implements OnInit {
   }
 
   async onSubmit() {
-    if (this.groupForm.invalid) return;
+    if (this.groupForm.invalid) {
+      // Mark all fields as touched to trigger validation messages
+      Object.keys(this.groupForm.controls).forEach(key => {
+        const control = this.groupForm.get(key);
+        control?.markAsTouched();
+      });
+      return;
+    }
 
     this.loading = true;
     this.error = '';
@@ -107,11 +118,15 @@ export class GroupFormComponent implements OnInit {
       currentBook: this.selectedBook ? {
         id: this.selectedBook.id,
         title: this.selectedBook.title,
-        imageUrl: this.selectedBook.imageLinks?.thumbnail || null
+        imageUrl: this.selectedBook.imageLinks?.thumbnail || null,
+        authors: this.selectedBook.authors || [],
+        description: this.selectedBook.description || '',
+        publishedDate: this.selectedBook.publishedDate || '',
+        pageCount: this.selectedBook.pageCount || 0
       } : null,
       coverImage: this.selectedBook?.imageLinks?.thumbnail || null,
       tags: this.groupForm.value.tags
-        ? this.groupForm.value.tags.split(',').map((tag: string) => tag.trim())
+        ? this.groupForm.value.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean)
         : []
     };
 
@@ -154,5 +169,20 @@ export class GroupFormComponent implements OnInit {
     } else {
       this.router.navigate(['/groups']);
     }
+  }
+
+  // Helper methods for the template
+  getErrorMessage(controlName: string): string {
+    const control = this.groupForm.get(controlName);
+    if (!control || !control.errors || !control.touched) return '';
+
+    const errors = control.errors;
+    if (errors['required']) return `${controlName} is required`;
+    if (errors['minlength']) {
+      return `${controlName} must be at least ${errors['minlength'].requiredLength} characters`;
+    }
+    if (errors['min']) return `${controlName} must be at least ${errors['min'].min}`;
+
+    return 'Invalid field';
   }
 }

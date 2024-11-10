@@ -145,9 +145,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .navbar {
-    margin-top: 20px; /* Add top margin for mobile */
-  }
 
   .user-email {
     margin-top: 20px;

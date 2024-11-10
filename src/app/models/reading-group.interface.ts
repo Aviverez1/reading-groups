@@ -12,6 +12,10 @@ export interface ReadingGroup {
     id: string;
     title: string;
     imageUrl?: string;
+    authors: string[];
+    description?: string;
+    publishedDate?: string;
+    pageCount?: number;
   };
   createdAt: Date;
   meetingDay?: string;

@@ -1,27 +1,55 @@
-# ReadingGroups
+# Reading Groups Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.9.
+A modern web application for managing book reading groups, built with Angular and Firebase. Create, join, and manage reading groups while discovering and discussing books with other members.
 
-## Development server
+![Application Screenshot](path-to-screenshot.png) [Add a screenshot of your app]
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+### Core Features
+- 🔐 Authentication System
+  - Email/Password login and registration
+  - Protected routes
+  - User profile management
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- 👥 Groups Management
+  - Create reading groups
+  - Join existing groups
+  - Admin controls for group management
+  - Member management
 
-## Build
+- 📚 Book Integration
+  - Search books using Google Books API
+  - Detailed book information
+  - Current book tracking per group
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- 💬 Community Features
+  - Comments system
+  - Member interactions
+  - Real-time updates
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Technologies Used
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Frontend:
+  - Angular 16
+  - TypeScript
+  - HTML5/CSS3
+  - FontAwesome Icons
+  - Responsive Design
 
-## Further help
+- Backend:
+  - Firebase Authentication
+  - Cloud Firestore
+  - Google Books API
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+- Node.js (v16 or higher)
+- npm (v8 or higher)
+- Angular CLI
+- A Firebase account
+- Git
+

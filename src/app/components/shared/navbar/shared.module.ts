@@ -24,7 +24,8 @@ import { BookDetailsComponent } from '../../books/book-details/book-details.comp
     GroupFormComponent,
     BookSearchComponent,
     ReactiveFormsModule,
-    GroupCardComponent
+    GroupCardComponent,
+    BookDetailsComponent
   ]
 })
 export class SharedModule { }

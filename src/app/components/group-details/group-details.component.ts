@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { ReadingGroup } from '../../models/reading-group.interface';
 import { User } from 'firebase/auth';
 import { FormsModule } from '@angular/forms';
+import { Book } from '../../models/book.interface';
 
 @Component({
   selector: 'app-group-details',
@@ -23,6 +24,7 @@ export class GroupDetailsComponent implements OnInit {
   isEditing = false;
   newComment: string = '';
   groupId: string | null = null;
+  selectedBook: Book | null = null;  // Add this
 
   constructor(
     private route: ActivatedRoute,
@@ -142,7 +144,7 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   async deleteGroup() {
-    if (!this.group || !window.confirm('Are you sure you want to delete this group?')) {
+    if (!this.group) {
       return;
     }
 
@@ -157,5 +159,29 @@ export class GroupDetailsComponent implements OnInit {
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
+  }
+
+  showBookDetails(currentBook: ReadingGroup['currentBook'], event: Event) {
+    if (!currentBook) return;
+    
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.selectedBook = {
+      id: currentBook.id,
+      title: currentBook.title,
+      authors: currentBook.authors || [],
+      description: currentBook.description || '',
+      publishedDate: currentBook.publishedDate || '',
+      pageCount: currentBook.pageCount || 0,
+      imageLinks: {
+        thumbnail: currentBook.imageUrl || '',
+        smallThumbnail: currentBook.imageUrl || ''
+      }
+    } as Book;
+  }
+  
+  closeBookDetails() {
+    this.selectedBook = null;
   }
 }
