@@ -12,7 +12,7 @@
   padding: 20px;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
-  overflow-y: auto;
+  overflow-y: auto; /* Ensure the overlay handles the scrolling */
 }
 
 .modal-content {
@@ -20,8 +20,8 @@
   border-radius: 12px;
   width: 100%;
   max-width: 800px;
-  max-height: 60vh;  /* Increased to allow more content */
-  overflow-y: auto;
+  max-height: 90vh;  /* Adjusted to allow more content */
+  overflow-y: hidden; /* Prevent the content from creating its own scrollable area */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease;
   margin: 1vh auto;
@@ -60,8 +60,8 @@
 
 .modal-body {
   padding: 20px;
-  max-height: calc(98vh - 70px); /* Adjusted to account for header */
-  overflow-y: auto;
+  max-height: calc(90vh - 70px); /* Adjusted to account for header */
+  overflow-y: auto; /* Ensure the body handles its own scrolling */
 }
 
 .book-grid {
@@ -164,10 +164,10 @@
 
   .modal-content {
       margin: 0 10px;
-      max-height: 80vh;  /* Keep maximum height on mobile */
+      max-height: 200vh;  /* Keep maximum height on mobile */
   }
   
   .modal-body {
-      max-height: calc(98vh - 70px);  /* Adjusted for mobile */
+      max-height: calc(80vh - 70px);  /* Adjusted for mobile */
   }
 }

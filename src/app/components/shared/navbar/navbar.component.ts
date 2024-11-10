@@ -1,24 +1,28 @@
-// navbar.component.ts
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { Component, HostListener, Renderer2, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'firebase/auth';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnDestroy {
   isMenuOpen: boolean = false;
   user$: Observable<User | null>;
+  private clickListener: () => void;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private renderer: Renderer2
   ) {
     this.user$ = this.authService.user$;
+    this.clickListener = this.renderer.listen('document', 'click', (event: Event) => {
+      this.handleDocumentClick(event);
+    });
   }
 
   toggleMenu() {
@@ -26,15 +30,24 @@ export class NavbarComponent {
   }
 
   isActive(route: string): boolean {
-    return this.router.isActive(route, true);
+    return this.router.url === route;
   }
 
-  async logout() {
-    try {
-      await this.authService.logout();
-      this.router.navigate(['/']);
-    } catch (error) {
-      console.error('Logout error:', error);
+  logout() {
+    this.authService.logout();
+    this.isMenuOpen = false;
+  }
+
+  handleDocumentClick(event: Event) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.navbar')) {
+      this.isMenuOpen = false;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.clickListener) {
+      this.clickListener();
     }
   }
 }
