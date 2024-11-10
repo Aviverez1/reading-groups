@@ -72,18 +72,7 @@ export class GroupFormComponent implements OnInit {
     });
 
     if (this.initialData.currentBook) {
-      this.selectedBook = {
-        id: this.initialData.currentBook.id,
-        title: this.initialData.currentBook.title,
-        authors: this.initialData.currentBook.authors || [],
-        description: this.initialData.currentBook.description || '',
-        publishedDate: this.initialData.currentBook.publishedDate || '',
-        pageCount: this.initialData.currentBook.pageCount || 0,
-        imageLinks: {
-          thumbnail: this.initialData.currentBook.imageUrl || '',
-          smallThumbnail: this.initialData.currentBook.imageUrl || ''
-        }
-      } as Book;
+      this.selectedBook = this.initialData.currentBook;
     }
   }
 
@@ -102,47 +91,51 @@ export class GroupFormComponent implements OnInit {
 
   async onSubmit() {
     if (this.groupForm.invalid) {
-      // Mark all fields as touched to trigger validation messages
       Object.keys(this.groupForm.controls).forEach(key => {
         const control = this.groupForm.get(key);
         control?.markAsTouched();
       });
       return;
     }
-
+  
     this.loading = true;
     this.error = '';
-
+  
+    // Clean the book object by removing undefined fields
+    const cleanBook = this.selectedBook ? {
+      id: this.selectedBook.id,
+      title: this.selectedBook.title,
+      authors: this.selectedBook.authors || [],
+      description: this.selectedBook.description || '',
+      publishedDate: this.selectedBook.publishedDate || '',
+      pageCount: this.selectedBook.pageCount || 0,
+      imageLinks: {
+        thumbnail: this.selectedBook.imageLinks?.thumbnail || '',
+        smallThumbnail: this.selectedBook.imageLinks?.smallThumbnail || ''
+      },
+      categories: this.selectedBook.categories || []
+    } : null;
+  
     const formData = {
       ...this.groupForm.value,
-      currentBook: this.selectedBook ? {
-        id: this.selectedBook.id,
-        title: this.selectedBook.title,
-        imageUrl: this.selectedBook.imageLinks?.thumbnail || null,
-        authors: this.selectedBook.authors || [],
-        description: this.selectedBook.description || '',
-        publishedDate: this.selectedBook.publishedDate || '',
-        pageCount: this.selectedBook.pageCount || 0
-      } : null,
+      currentBook: cleanBook,
       coverImage: this.selectedBook?.imageLinks?.thumbnail || null,
       tags: this.groupForm.value.tags
         ? this.groupForm.value.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean)
         : []
     };
-
+  
     try {
       if (this.mode === 'edit') {
-        // For edit mode, emit the data to parent component
         this.formSubmit.emit(formData);
       } else {
-        // For create mode, handle the creation here
         const auth = getAuth();
         const user = auth.currentUser;
-
+  
         if (!user) {
           throw new Error('Must be logged in to create a group');
         }
-
+  
         const groupData = {
           ...formData,
           adminId: user.uid,
@@ -151,7 +144,7 @@ export class GroupFormComponent implements OnInit {
           memberCount: 1,
           createdAt: new Date()
         };
-
+  
         await this.firebaseService.addDocument('groups', groupData);
         this.router.navigate(['/groups']);
       }
@@ -171,7 +164,6 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
-  // Helper methods for the template
   getErrorMessage(controlName: string): string {
     const control = this.groupForm.get(controlName);
     if (!control || !control.errors || !control.touched) return '';

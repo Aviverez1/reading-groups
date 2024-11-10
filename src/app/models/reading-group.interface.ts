@@ -1,4 +1,6 @@
 // reading-group.interface.ts
+import { Book } from './book.interface';
+
 export interface ReadingGroup {
   id?: string;
   name: string;
@@ -8,15 +10,7 @@ export interface ReadingGroup {
   memberIds: string[];
   memberEmails: string[];
   memberCount: number;
-  currentBook?: {
-    id: string;
-    title: string;
-    imageUrl?: string;
-    authors: string[];
-    description?: string;
-    publishedDate?: string;
-    pageCount?: number;
-  };
+  currentBook?: Book;
   createdAt: Date;
   meetingDay?: string;
   meetingTime?: string;

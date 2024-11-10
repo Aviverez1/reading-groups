@@ -24,7 +24,7 @@ export class GroupDetailsComponent implements OnInit {
   isEditing = false;
   newComment: string = '';
   groupId: string | null = null;
-  selectedBook: Book | null = null;  // Add this
+  selectedBook: Book | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -161,26 +161,15 @@ export class GroupDetailsComponent implements OnInit {
     this.isEditing = !this.isEditing;
   }
 
-  showBookDetails(currentBook: ReadingGroup['currentBook'], event: Event) {
-    if (!currentBook) return;
+  showBookDetails(book: Book | undefined, event: Event) {
+    if (!book) return;
     
     event.preventDefault();
     event.stopPropagation();
     
-    this.selectedBook = {
-      id: currentBook.id,
-      title: currentBook.title,
-      authors: currentBook.authors || [],
-      description: currentBook.description || '',
-      publishedDate: currentBook.publishedDate || '',
-      pageCount: currentBook.pageCount || 0,
-      imageLinks: {
-        thumbnail: currentBook.imageUrl || '',
-        smallThumbnail: currentBook.imageUrl || ''
-      }
-    } as Book;
+    this.selectedBook = book;
   }
-  
+
   closeBookDetails() {
     this.selectedBook = null;
   }
