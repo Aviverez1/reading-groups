@@ -1,65 +1,65 @@
 <!-- home.component.html -->
 <div class="home-container">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Welcome to Reading Groups</h1>
-        <p>Join a community of readers, discover new books, and engage in meaningful discussions</p>
-        <div class="hero-buttons">
-          <button class="btn primary" routerLink="/groups/create">Create a Group</button>
-          <button class="btn secondary" routerLink="/groups">Browse Groups</button>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to Reading Groups</h1>
+      <p>Join a community of readers, discover new books, and engage in meaningful discussions</p>
+      <div class="hero-buttons">
+        <button class="btn primary" routerLink="/groups/create">Create a Group</button>
+        <button class="btn secondary" routerLink="/groups">Browse Groups</button>
       </div>
-    </section>
-  
-    <!-- Featured Groups Section -->
-    <section class="featured-groups">
-      <h2>Featured Reading Groups</h2>
-      
-      <div class="loading-spinner" *ngIf="isLoading">
-        Loading groups...
+    </div>
+  </section>
+
+  <!-- Featured Groups Section -->
+  <section class="featured-groups">
+    <h2>Featured Reading Groups</h2>
+    
+    <div class="loading-spinner" *ngIf="isLoading">
+      Loading groups...
+    </div>
+
+    <div class="error-message" *ngIf="error">
+      {{ error }}
+    </div>
+
+    <div class="groups-grid" *ngIf="!isLoading && !error">
+      <app-group-card 
+        *ngFor="let group of featuredGroups" 
+        [group]="group"
+      ></app-group-card>
+    </div>
+
+    <div class="view-all-link" *ngIf="featuredGroups.length > 0">
+      <a routerLink="/groups">View All Groups →</a>
+    </div>
+  </section>
+
+  <!-- Quick Start Guide -->
+  <section class="quick-start">
+    <h2>How It Works</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Join or Create</h3>
+        <p>Create your own reading group or join an existing one</p>
       </div>
-  
-      <div class="error-message" *ngIf="error">
-        {{ error }}
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Set Up Group</h3>
+        <p>Choose a book, set meeting schedule, and add group details</p>
       </div>
-  
-      <div class="groups-grid" *ngIf="!isLoading && !error">
-        <app-group-card 
-          *ngFor="let group of featuredGroups" 
-          [group]="group"
-        ></app-group-card>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Add Members</h3>
+        <p>Share the group and invite others to join</p>
       </div>
-  
-      <div class="view-all-link" *ngIf="featuredGroups.length > 0">
-        <a routerLink="/groups">View All Groups →</a>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>Engage</h3>
+        <p>Comment, discuss, and interact with other members</p>
       </div>
-    </section>
-  
-    <!-- Quick Start Guide -->
-    <section class="quick-start">
-      <h2>How It Works</h2>
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h3>Join or Create</h3>
-          <p>Join an existing reading group or create your own</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h3>Pick Books</h3>
-          <p>Vote on books or select from recommendations</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h3>Read Together</h3>
-          <p>Follow the reading schedule and track progress</p>
-        </div>
-        <div class="step-card">
-          <div class="step-number">4</div>
-          <h3>Discuss</h3>
-          <p>Share thoughts and discuss with group members</p>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>
