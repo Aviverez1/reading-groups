@@ -170,7 +170,12 @@
   }
 
   .nav-links.active, .auth-buttons.active {
+    margin-top: 50px;
     display: flex;
+  }
+  
+  .nav-links.active{
+    margin-top: 30px;
   }
 
   .nav-links a {
