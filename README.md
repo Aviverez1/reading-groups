@@ -2,8 +2,6 @@
 
 A modern web application for managing book reading groups, built with Angular and Firebase. Create, join, and manage reading groups while discovering and discussing books with other members.
 
-![Application Screenshot](path-to-screenshot.png) [Add a screenshot of your app]
-
 ## Features
 
 ### Core Features
