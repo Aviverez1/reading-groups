@@ -36,6 +36,7 @@ export class NavbarComponent implements OnDestroy {
   logout() {
     this.authService.logout();
     this.isMenuOpen = false;
+    this.router.navigate(['/']); 
   }
 
   handleDocumentClick(event: Event) {
