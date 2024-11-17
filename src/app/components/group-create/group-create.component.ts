@@ -72,11 +72,7 @@ export class GroupCreateComponent {
         memberEmails: [user.email], 
         memberCount: 1,
         createdAt: new Date(),
-        currentBook: this.selectedBook ? {
-          id: this.selectedBook.id,
-          title: this.selectedBook.title,
-          imageUrl: this.selectedBook.imageLinks?.thumbnail || null
-        } : null,
+        currentBook: this.selectedBook,
         coverImage: this.selectedBook?.imageLinks?.thumbnail || null,
         tags: this.groupForm.value.tags
           ? this.groupForm.value.tags.split(',').map((tag: string) => tag.trim())
