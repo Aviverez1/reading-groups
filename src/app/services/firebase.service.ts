@@ -41,7 +41,7 @@ export class FirebaseService {
       const collectionRef = collection(this.firestore, collectionName);
       const docRef = await addDoc(collectionRef, {
         ...data,
-        createdAt: serverTimestamp()  // Use Firebase server timestamp
+        createdAt: serverTimestamp()  
       });
       return docRef.id;
     } catch (error) {
@@ -74,7 +74,7 @@ export class FirebaseService {
           coverImage: data['coverImage'],
           lastUpdated: data['lastUpdated']?.toDate(),
           nextMeeting: data['nextMeeting']?.toDate(),
-          comments: data['comments'] || []  // Add this line to include comments
+          comments: data['comments'] || []  
         } as ReadingGroup;
       } else {
         throw new Error('Document not found');

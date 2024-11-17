@@ -18,10 +18,10 @@ const routes: Routes = [
     ]
   },
   { 
+    //lazy loading of the groups module
     path: 'groups',
     loadChildren: () => import('../modules/groups/groups.module')
       .then(m => m.GroupsModule),
-    //canActivate: [AuthGuard]
   }
 ];
 
